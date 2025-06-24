@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jóvenes a Programar - Plataforma Educativa</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header y navegación */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: #1a1a2e;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .brand-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2d3748;
+        }
+
+        /* Selector de perfil */
+        .perfil-selector {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .perfil-btn {
+            padding: 0.7rem 1.5rem;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .perfil-btn:hover, .perfil-btn.active {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .perfil-actual {
+            font-weight: bold;
+            color: #2d3748;
+            padding: 0.5rem 1rem;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 15px;
+        }
+
+        /* Sección principal */
+        .main-section {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2.5rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .welcome-message {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .welcome-message h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .welcome-subtitle {
+            color: #4a5568;
+            font-size: 1.2rem;
+        }
+
+        /* Recomendaciones personalizadas */
+        .recomendaciones-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .recomendacion {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #667eea;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .recomendacion:nth-child(2) { animation-delay: 0.2s; }
+        .recomendacion:nth-child(3) { animation-delay: 0.4s; }
+        .recomendacion:nth-child(4) { animation-delay: 0.6s; }
+
+        .recomendacion:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .recomendacion h3 {
+            color: #2d3748;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .recomendacion-icon {
+            font-size: 1.5rem;
+        }
+
+        .recomendacion p {
+            color: #4a5568;
+            margin-bottom: 1rem;
+        }
+
+        .recomendacion-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 500;
+            transition: transform 0.3s ease;
+        }
+
+        .recomendacion-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Estadísticas personalizadas */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Notificaciones */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #667eea;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        /* Animaciones */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-transition {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .fade-transition.show {
+            opacity: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .perfil-selector {
+                justify-content: center;
+            }
+
+            .welcome-message h1 {
+                font-size: 2rem;
+            }
+
+            .recomendaciones-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Estilos específicos por perfil */
+        .perfil-estudiante .recomendacion {
+            border-left-color: #48bb78;
+        }
+
+        .perfil-profesor .recomendacion {
+            border-left-color: #ed8936;
+        }
+
+        .perfil-visitante .recomendacion {
+            border-left-color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-section">
+                <div class="logo">JP</div>
+                <div class="brand-name">Jóvenes a Programar</div>
+            </div>
+            <div class="perfil-selector">
+                <span class="perfil-actual">Perfil: <span id="perfil-display">Visitante</span></span>
+                <a href="#" onclick="cambiarPerfil('estudiante')" class="perfil-btn" id="btn-estudiante">👨‍🎓 Estudiante</a>
+                <a href="#" onclick="cambiarPerfil('profesor')" class="perfil-btn" id="btn-profesor">👨‍🏫 Profesor</a>
+                <a href="#" onclick="cambiarPerfil('visitante')" class="perfil-btn active" id="btn-visitante">👤 Visitante</a>
+            </div>
+        </header>
+
+        <div class="main-section">
+            <div class="welcome-message">
+                <h1 id="titulo-principal">Bienvenido a Jóvenes a Programar</h1>
+                <p class="welcome-subtitle" id="subtitulo">Descubre el mundo del desarrollo web</p>
+            </div>
+
+            <div class="stats-section" id="estadisticas">
+                <!-- Las estadísticas se generan dinámicamente -->
+            </div>
+
+            <div class="recomendaciones-container" id="recomendaciones">
+                <!-- Las recomendaciones se generan dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <div class="notification" id="notification">
+        <span id="notification-text">Perfil cambiado</span>
+    </div>
+
+    <script>
+        // Datos de contenido personalizado por perfil
+        const perfilesData = {
+            estudiante: {
+                titulo: "¡Hola Estudiante! 👨‍🎓",
+                subtitulo: "Continúa tu camino hacia convertirte en desarrollador web",
+                estadisticas: [
+                    { numero: "85%", label: "Progreso del Curso" },
+                    { numero: "12", label: "Proyectos Completados" },
+                    { numero: "3", label: "Certificaciones" },
+                    { numero: "150", label: "Horas de Código" }
+                ],
+                recomendaciones: [
+                    {
+                        icon: "📚",
+                        titulo: "Próxima Lección: JavaScript Avanzado",
+                        contenido: "Continúa con tu módulo actual sobre funciones arrow y async/await. ¡Estás muy cerca de completar el módulo!",
+                        boton: "Continuar Aprendiendo"
+                    },
+                    {
+                        icon: "💻",
+                        titulo: "Proyecto Práctico Pendiente",
+                        contenido: "Tienes un proyecto de portfolio personal sin terminar. Complétalo para reforzar tus conocimientos de HTML y CSS.",
+                        boton: "Ver Proyecto"
+                    },
+                    {
+                        icon: "🎯",
+                        titulo: "Desafío de la Semana",
+                        contenido: "Crea una aplicación de lista de tareas usando vanilla JavaScript. Fecha límite: viernes 28 de junio.",
+                        boton: "Aceptar Desafío"
+                    },
+                    {
+                        icon: "👥",
+                        titulo: "Grupo de Estudio",
+                        contenido: "Únete al grupo de estudio sobre React. Próxima sesión: martes a las 19:00 hs.",
+                        boton: "Unirse al Grupo"
+                    }
+                ]
+            },
+            profesor: {
+                titulo: "Panel del Profesor 👨‍🏫",
+                subtitulo: "Gestiona tus clases y estudiantes",
+                estadisticas: [
+                    { numero: "45", label: "Estudiantes Activos" },
+                    { numero: "8", label: "Cursos Impartidos" },
+                    { numero: "92%", label: "Satisfacción Promedio" },
+                    { numero: "23", label: "Proyectos Revisados" }
+                ],
+                recomendaciones: [
+                    {
+                        icon: "📊",
+                        titulo: "Progreso de Estudiantes",
+                        contenido: "5 estudiantes necesitan apoyo adicional en JavaScript. María González ha completado todos los ejercicios.",
+                        boton: "Ver Detalles"
+                    },
+                    {
+                        icon: "📝",
+                        titulo: "Tareas por Revisar",
+                        contenido: "Tienes 12 proyectos pendientes de revisión para el curso de Frontend Básico. Plazo: 2 días.",
+                        boton: "Revisar Tareas"
+                    },
+                    {
+                        icon: "📅",
+                        titulo: "Próxima Clase",
+                        contenido: "Mañana miércoles: 'Introducción a APIs REST' a las 14:00. Material preparado y aula virtual lista.",
+                        boton: "Ver Clase"
+                    },
+                    {
+                        icon: "💡",
+                        titulo: "Recurso Sugerido",
+                        contenido: "Nuevo curso disponible: 'Metodologías de Enseñanza en Programación'. Perfecto para mejorar tus técnicas.",
+                        boton: "Explorar Curso"
+                    }
+                ]
+            },
+            visitante: {
+                titulo: "¡Bienvenido a Jóvenes a Programar! 👤",
+                subtitulo: "Descubre nuestros cursos de desarrollo web",
+                estadisticas: [
+                    { numero: "500+", label: "Estudiantes Graduados" },
+                    { numero: "15", label: "Cursos Disponibles" },
+                    { numero: "95%", label: "Empleabilidad" },
+                    { numero: "24/7", label: "Soporte Online" }
+                ],
+                recomendaciones: [
+                    {
+                        icon: "🚀",
+                        titulo: "Curso Gratuito de Introducción",
+                        contenido: "Aprende HTML, CSS y JavaScript básico en nuestro curso introductorio completamente gratuito. ¡Perfecto para comenzar!",
+                        boton: "Empezar Gratis"
+                    },
+                    {
+                        icon: "🎓",
+                        titulo: "Programa Full-Stack",
+                        contenido: "Conviértete en desarrollador web en 6 meses. Incluye proyectos reales, mentorías y garantía de empleo.",
+                        boton: "Ver Programa"
+                    },
+                    {
+                        icon: "💼",
+                        titulo: "Historias de Éxito",
+                        contenido: "Conoce a nuestros graduados que ahora trabajan en empresas como Mercado Libre, Globant y startups tecnológicas.",
+                        boton: "Leer Testimonios"
+                    },
+                    {
+                        icon: "📞",
+                        titulo: "Asesoría Personalizada",
+                        contenido: "Agenda una consulta gratuita con nuestros asesores educativos para diseñar tu plan de carrera personalizado.",
+                        boton: "Agendar Cita"
+                    }
+                ]
+            }
+        };
+
+        // Función para cambiar perfil
+        function cambiarPerfil(nuevoPerfil) {
+            // Guardar en localStorage
+            localStorage.setItem('perfilUsuario', nuevoPerfil);
+            
+            // Actualizar interfaz
+            actualizarContenido(nuevoPerfil);
+            actualizarBotones(nuevoPerfil);
+            mostrarNotificacion(`Perfil cambiado a: ${capitalize(nuevoPerfil)}`);
+        }
+
+        // Función para actualizar el contenido según el perfil
+        function actualizarContenido(perfil) {
+            const data = perfilesData[perfil];
+            
+            // Agregar clase CSS para el perfil
+            document.body.className = `perfil-${perfil}`;
+            
+            // Actualizar elementos principales con transición
+            const titulo = document.getElementById('titulo-principal');
+            const subtitulo = document.getElementById('subtitulo');
+            const perfilDisplay = document.getElementById('perfil-display');
+            
+            // Efecto fade
+            titulo.classList.add('fade-transition');
+            subtitulo.classList.add('fade-transition');
+            
+            setTimeout(() => {
+                titulo.textContent = data.titulo;
+                subtitulo.textContent = data.subtitulo;
+                perfilDisplay.textContent = capitalize(perfil);
+                
+                titulo.classList.add('show');
+                subtitulo.classList.add('show');
+            }, 150);
+            
+            // Actualizar estadísticas
+            actualizarEstadisticas(data.estadisticas);
+            
+            // Actualizar recomendaciones
+            actualizarRecomendaciones(data.recomendaciones);
+        }
+
+        // Función para actualizar estadísticas
+        function actualizarEstadisticas(stats) {
+            const statsContainer = document.getElementById('estadisticas');
+            statsContainer.innerHTML = '';
+            
+            stats.forEach((stat, index) => {
+                const statCard = document.createElement('div');
+                statCard.className = 'stat-card';
+                statCard.style.animationDelay = `${index * 0.1}s`;
+                statCard.innerHTML = `
+                    <div class="stat-number">${stat.numero}</div>
+                    <div class="stat-label">${stat.label}</div>
+                `;
+                statsContainer.appendChild(statCard);
+            });
+        }
+
+        // Función para actualizar recomendaciones
+        function actualizarRecomendaciones(recomendaciones) {
+            const container = document.getElementById('recomendaciones');
+            container.innerHTML = '';
+            
+            recomendaciones.forEach((rec, index) => {
+                const recDiv = document.createElement('div');
+                recDiv.className = 'recomendacion';
+                recDiv.style.animationDelay = `${index * 0.2}s`;
+                recDiv.innerHTML = `
+                    <h3><span class="recomendacion-icon">${rec.icon}</span>${rec.titulo}</h3>
+                    <p>${rec.contenido}</p>
+                    <a href="#" class="recomendacion-btn" onclick="accionRecomendacion('${rec.titulo}')">${rec.boton}</a>
+                `;
+                container.appendChild(recDiv);
+            });
+        }
+
+        // Función para manejar acciones de recomendaciones
+        function accionRecomendacion(titulo) {
+            mostrarNotificacion(`Acción ejecutada: ${titulo}`);
+        }
+
+        // Función para actualizar botones activos
+        function actualizarBotones(perfil) {
+            document.querySelectorAll('.perfil-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(`btn-${perfil}`).classList.add('active');
+        }
+
+        // Función para mostrar notificaciones
+        function mostrarNotificacion(mensaje) {
+            const notification = document.getElementById('notification');
+            const notificationText = document.getElementById('notification-text');
+            
+            notificationText.textContent = mensaje;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Función auxiliar para capitalizar
+        function capitalize(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+
+        // Función para cargar perfil desde localStorage
+        function cargarPerfilGuardado() {
+            const perfilGuardado = localStorage.getItem('perfilUsuario') || 'visitante';
+            actualizarContenido(perfilGuardado);
+            actualizarBotones(perfilGuardado);
+        }
+
+        // Simular datos dinámicos (opcional)
+        function simularActualizacionesDinamicas() {
+            setInterval(() => {
+                const perfilActual = localStorage.getItem('perfilUsuario') || 'visitante';
+                if (perfilActual === 'estudiante') {
+                    // Simular progreso del estudiante
+                    const progressStat = document.querySelector('.stat-number');
+                    if (progressStat && Math.random() < 0.1) { // 10% chance cada 30 segundos
+                        let currentProgress = parseInt(progressStat.textContent);
+                        if (currentProgress < 100) {
+                            progressStat.textContent = `${currentProgress + 1}%`;
+                        }
+                    }
+                }
+            }, 30000); // Cada 30 segundos
+        }
+
+        // Inicialización cuando se carga la página
+        document.addEventListener('DOMContentLoaded', function() {
+            cargarPerfilGuardado();
+            simularActualizacionesDinamicas();
+            
+            // Mensaje de bienvenida inicial
+            setTimeout(() => {
+                const perfilActual = localStorage.getItem('perfilUsuario') || 'visitante';
+                mostrarNotificacion(`¡Bienvenido de vuelta como ${capitalize(perfilActual)}!`);
+            }, 1000);
+        });
+
+        // Guardar última actividad
+        window.addEventListener('beforeunload', function() {
+            localStorage.setItem('ultimaVisita', new Date().toISOString());
+        });
+    </script>
+</body>
+</html>
